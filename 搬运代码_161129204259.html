@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>搬运代码.md—E:\programme\GitHub\cai</title>
+    <style type="text/css">
+    html{font-family: sans-serif;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%}body{margin: 0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display: block}audio,canvas,progress,video{display: inline-block;vertical-align: baseline}audio:not([controls]){display: none;height: 0}[hidden],template{display: none}a{background: transparent}a:active,a:hover{outline: 0}abbr[title]{border-bottom: 1px dotted}b,strong{font-weight: bold}dfn{font-style: italic}h1{font-size: 2em;margin: 0.67em 0}mark{background: #ff0;color: #000}small{font-size: 80%}sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baseline}sup{top: -0.5em}sub{bottom: -0.25em}img{border: 0}svg:not(:root){overflow: hidden}figure{margin: 1em 40px}hr{box-sizing: content-box;height: 0}pre{overflow: auto}code,kbd,pre,samp{font-family: monospace, monospace;font-size: 1em}button,input,optgroup,select,textarea{color: inherit;font: inherit;margin: 0}button{overflow: visible}button,select{text-transform: none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance: button;cursor: pointer}button[disabled],html input[disabled]{cursor: default}button::-moz-focus-inner,input::-moz-focus-inner{border: 0;padding: 0}input{line-height: normal}input[type="checkbox"],input[type="radio"]{box-sizing: border-box;padding: 0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height: auto}input[type="search"]{-webkit-appearance: textfield;box-sizing: content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance: none}fieldset{border: 1px solid #c0c0c0;margin: 0 2px;padding: 0.35em 0.625em 0.75em}legend{border: 0;padding: 0}textarea{overflow: auto}optgroup{font-weight: bold}table{border-collapse: collapse;border-spacing: 0}td,th{padding: 0}*{box-sizing: border-box}input,select,textarea,button{font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"}body{min-width: 1020px;font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";color: #333;background-color: #fff}a{color: #4183c4;text-decoration: none}a:hover,a:active{text-decoration: underline}hr,.rule{height: 0;margin: 15px 0;overflow: hidden;background: transparent;border: 0;border-bottom: 1px solid #ddd}hr:before,.rule:before{display: table;content: ""}hr:after,.rule:after{display: table;clear: both;content: ""}h1,h2,h3,h4,h5,h6{margin-top: 15px;margin-bottom: 15px;line-height: 1.1}h1{font-size: 30px}h2{font-size: 21px}h3{font-size: 16px}h4{font-size: 14px}h5{font-size: 12px}h6{font-size: 11px}small{font-size: 90%}blockquote{margin: 0}.lead{margin-bottom: 30px;font-size: 20px;font-weight: 300;color: #555}.text-muted{color: #999}.text-danger{color: #bd2c00}.text-emphasized{font-weight: bold;color: #333}ul,ol{padding: 0;margin-top: 0;margin-bottom: 0}ol ol,ul ol{list-style-type: lower-roman}ul ul ol,ul ol ol,ol ul ol,ol ol ol{list-style-type: lower-alpha}dd{margin-left: 0}tt,code{font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;font-size: 12px}pre{margin-top: 0;margin-bottom: 0;font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace}#realtime .status{overflow: visible;position: absolute;top: -5px;left: 0;background: url("/public/images/github-status.png");width: 26px;height: 26px;display: block;margin: 0 5px 0 0}#realtime .up{background-position: 0 0}#realtime .problem{background-position: 0 -53px}#realtime .down{background-position: 0 -26px}.container{max-width: 920px;margin: 0 auto 20px auto}#header{background: #FAFAFA;background: -moz-linear-gradient(#FAFAFA, #EAEAEA);background: -webkit-linear-gradient(#FAFAFA, #EAEAEA);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#eaeaea')";border-bottom: 1px solid #CACACA;box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4),0 0 10px rgba(0, 0, 0, 0.1)}#markup{padding: 3px}#markup article{padding-top: 30px}.markdown-body{overflow: hidden;font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;font-size: 16px;line-height: 1.6;word-wrap: break-word}.markdown-body>*:first-child{margin-top: 0 !important}.markdown-body>*:last-child{margin-bottom: 0 !important}.markdown-body .absent{color: #c00}.markdown-body .anchor{position: absolute;top: 0;left: 0;display: block;padding-right: 6px;padding-left: 30px;margin-left: -30px}.markdown-body .anchor:focus{outline: none}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{position: relative;margin-top: 1em;margin-bottom: 16px;font-weight: bold;line-height: 1.4}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{display: none;color: #000;vertical-align: middle}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{padding-left: 8px;margin-left: -30px;text-decoration: none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{display: inline-block}.markdown-body h1 tt,.markdown-body h1 code,.markdown-body h2 tt,.markdown-body h2 code,.markdown-body h3 tt,.markdown-body h3 code,.markdown-body h4 tt,.markdown-body h4 code,.markdown-body h5 tt,.markdown-body h5 code,.markdown-body h6 tt,.markdown-body h6 code{font-size: inherit}.markdown-body h1{padding-bottom: 0.3em;font-size: 2.25em;line-height: 1.2;border-bottom: 1px solid #eee}.markdown-body h1 .anchor{line-height: 1}.markdown-body h2{padding-bottom: 0.3em;font-size: 1.75em;line-height: 1.225;border-bottom: 1px solid #eee}.markdown-body h2 .anchor{line-height: 1}.markdown-body h3{font-size: 1.5em;line-height: 1.43}.markdown-body h3 .anchor{line-height: 1.2}.markdown-body h4{font-size: 1.25em}.markdown-body h4 .anchor{line-height: 1.2}.markdown-body h5{font-size: 1em}.markdown-body h5 .anchor{line-height: 1.1}.markdown-body h6{font-size: 1em;color: #777}.markdown-body h6 .anchor{line-height: 1.1}.markdown-body p,.markdown-body blockquote,.markdown-body ul,.markdown-body ol,.markdown-body dl,.markdown-body table,.markdown-body pre{margin-top: 0;margin-bottom: 16px}.markdown-body hr{height: 4px;padding: 0;margin: 16px 0;background-color: #e7e7e7;border: 0 none}.markdown-body ul,.markdown-body ol{padding-left: 2em}.markdown-body ul.no-list,.markdown-body ol.no-list{padding: 0;list-style-type: none}.markdown-body ul ul,.markdown-body ul ol,.markdown-body ol ol,.markdown-body ol ul{margin-top: 0;margin-bottom: 0}.markdown-body li>p{margin-top: 16px}.markdown-body dl{padding: 0}.markdown-body dl dt{padding: 0;margin-top: 16px;font-size: 1em;font-style: italic;font-weight: bold}.markdown-body dl dd{padding: 0 16px;margin-bottom: 16px}.markdown-body blockquote{padding: 0 15px;color: #777;border-left: 4px solid #ddd}.markdown-body blockquote>:first-child{margin-top: 0}.markdown-body blockquote>:last-child{margin-bottom: 0}.markdown-body table{display: block;width: 100%;overflow: auto;word-break: normal;word-break: keep-all}.markdown-body table th{font-weight: bold}.markdown-body table th,.markdown-body table td{padding: 6px 13px;border: 1px solid #ddd}.markdown-body table tr{background-color: #fff;border-top: 1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color: #f8f8f8}.markdown-body img{max-width: 100%;box-sizing: border-box}.markdown-body span.frame{display: block;overflow: hidden}.markdown-body span.frame>span{display: block;float: left;width: auto;padding: 7px;margin: 13px 0 0;overflow: hidden;border: 1px solid #ddd}.markdown-body span.frame span img{display: block;float: left}.markdown-body span.frame span span{display: block;padding: 5px 0 0;clear: both;color: #333}.markdown-body span.align-center{display: block;overflow: hidden;clear: both}.markdown-body span.align-center>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: center}.markdown-body span.align-center span img{margin: 0 auto;text-align: center}.markdown-body span.align-right{display: block;overflow: hidden;clear: both}.markdown-body span.align-right>span{display: block;margin: 13px 0 0;overflow: hidden;text-align: right}.markdown-body span.align-right span img{margin: 0;text-align: right}.markdown-body span.float-left{display: block;float: left;margin-right: 13px;overflow: hidden}.markdown-body span.float-left span{margin: 13px 0 0}.markdown-body span.float-right{display: block;float: right;margin-left: 13px;overflow: hidden}.markdown-body span.float-right>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: right}.markdown-body code,.markdown-body tt{padding: 0;padding-top: 0.2em;padding-bottom: 0.2em;margin: 0;font-size: 85%;background-color: rgba(0,0,0,0.04);border-radius: 3px}.markdown-body code:before,.markdown-body code:after,.markdown-body tt:before,.markdown-body tt:after{letter-spacing: -0.2em;content: "\00a0"}.markdown-body code br,.markdown-body tt br{display: none}.markdown-body del code{text-decoration: inherit}.markdown-body pre>code{padding: 0;margin: 0;font-size: 100%;word-break: normal;white-space: pre;background: transparent;border: 0}.markdown-body .highlight{margin-bottom: 16px}.markdown-body .highlight pre,.markdown-body pre{padding: 16px;overflow: auto;font-size: 85%;line-height: 1.45;background-color: #f7f7f7;border-radius: 3px}.markdown-body .highlight pre{margin-bottom: 0;word-break: normal}.markdown-body pre{word-wrap: normal}.markdown-body pre code,.markdown-body pre tt{display: inline;max-width: initial;padding: 0;margin: 0;overflow: initial;line-height: inherit;word-wrap: normal;background-color: transparent;border: 0}.markdown-body pre code:before,.markdown-body pre code:after,.markdown-body pre tt:before,.markdown-body pre tt:after{content: normal}.markdown-body kbd{display: inline-block;padding: 3px 5px;font-size: 11px;line-height: 10px;color: #555;vertical-align: middle;background-color: #fcfcfc;border: solid 1px #ccc;border-bottom-color: #bbb;border-radius: 3px;box-shadow: inset 0 -1px 0 #bbb}.codehilite{background: #ffffff}.codehilite .c{color: #999988;font-style: italic}.codehilite .err{color: #a61717;background-color: #e3d2d2}.codehilite .k{color: #000000;font-weight: bold}.codehilite .o{color: #000000;font-weight: bold}.codehilite .cm{color: #999988;font-style: italic}.codehilite .cp{color: #999999;font-weight: bold}.codehilite .c1{color: #999988;font-style: italic}.codehilite .cs{color: #999999;font-weight: bold;font-style: italic}.codehilite .gd{color: #000000;background-color: #ffdddd}.codehilite .gd .x{color: #000000;background-color: #ffaaaa}.codehilite .ge{color: #000000;font-style: italic}.codehilite .gr{color: #aa0000}.codehilite .gh{color: #999999}.codehilite .gi{color: #000000;background-color: #ddffdd}.codehilite .gi .x{color: #000000;background-color: #aaffaa}.codehilite .go{color: #888888}.codehilite .gp{color: #555555}.codehilite .gs{font-weight: bold}.codehilite .gu{color: #aaaaaa}.codehilite .gt{color: #aa0000}.codehilite .kc{color: #000000;font-weight: bold}.codehilite .kd{color: #000000;font-weight: bold}.codehilite .kp{color: #000000;font-weight: bold}.codehilite .kr{color: #000000;font-weight: bold}.codehilite .kt{color: #445588;font-weight: bold}.codehilite .m{color: #009999}.codehilite .s{color: #d14}.codehilite .na{color: #008080}.codehilite .nb{color: #0086B3}.codehilite .nc{color: #445588;font-weight: bold}.codehilite .no{color: #008080}.codehilite .ni{color: #800080}.codehilite .ne{color: #990000;font-weight: bold}.codehilite .nf{color: #990000;font-weight: bold}.codehilite .nn{color: #555555}.codehilite .nt{color: #000080}.codehilite .nv{color: #008080}.codehilite .ow{color: #000000;font-weight: bold}.codehilite .w{color: #bbbbbb}.codehilite .mf{color: #009999}.codehilite .mh{color: #009999}.codehilite .mi{color: #009999}.codehilite .mo{color: #009999}.codehilite .sb{color: #d14}.codehilite .sc{color: #d14}.codehilite .sd{color: #d14}.codehilite .s2{color: #d14}.codehilite .se{color: #d14}.codehilite .sh{color: #d14}.codehilite .si{color: #d14}.codehilite .sx{color: #d14}.codehilite .sr{color: #009926}.codehilite .s1{color: #d14}.codehilite .ss{color: #990073}.codehilite .bp{color: #999999}.codehilite .vc{color: #008080}.codehilite .vg{color: #008080}.codehilite .vi{color: #008080}.codehilite .il{color: #009999}
+    </style>
+    <style type="text/css">
+      .markdown-body hr{background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC")}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="markup">
+        <article id="content" class="markdown-body">
+          <h1>framelayout或viewPager+导航栏</h1>
+<h2>framelayout+导航栏</h2>
+<div class="codehilite"><pre>    private Fragment fragment1=new ContactsFragment();
+    private Fragment fragment2=new ContactsFragment();
+    private Fragment fragment3=new ContactsFragment();
+    private FragmentTransaction fragmentTransaction;
+    private ArrayList&lt;Fragment&gt; list_fragment=new ArrayList&lt;&gt;();
+    private void initFrameLayout() {
+        list_fragment.add(fragment1);
+        list_fragment.add(fragment2);
+        list_fragment.add(fragment3);
+        fragmentTransaction=getFragmentManager().beginTransaction();
+        for (int i=0;i&lt;list_fragment.size();i++){
+            fragmentTransaction.add(R.id.viewPager,list_fragment.get(i));
+        }
+        fragmentTransaction.commit();
+        showFragment(0);
+    }
+    private void hideFragment() {
+        for (int i=0;i&lt;list_fragment.size();i++){
+            fragmentTransaction.hide(list_fragment.get(i));
+        }
+    }
+    private void showFragment(int index){
+        fragmentTransaction=getFragmentManager().beginTransaction();
+        hideFragment();
+        fragmentTransaction.show(list_fragment.get(index));
+        fragmentTransaction.commit();
+    }
+    private void initButtonNavigationBar(){
+        mBottomNavigationBar
+                .addItem(new BottomNavigationItem(R.drawable.ic_profile_answer, &quot;会话&quot;))
+                .addItem(new BottomNavigationItem(R.drawable.ic_profile_article, &quot;通讯录&quot;))
+                .addItem(new BottomNavigationItem(R.drawable.ic_profile_column, &quot;设置&quot;))
+                .setActiveColor(R.color.colorAccent)
+                .setMode(BottomNavigationBar.MODE_FIXED)
+                .setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(int position) {
+                        showFragment(position);
+                    }
+                    @Override
+                    public void onTabUnselected(int position) {
+                    }
+                    @Override
+                    public void onTabReselected(int position) {
+                    }
+                })
+                .initialise();
+    }
+</pre></div>
+
+
+<h2>viewPager+导航栏</h2>
+<div class="codehilite"><pre>private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return null;
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return list_fragment.get(position);
+        }
+        @Override
+        public int getCount() {
+            return list_fragment.size();
+        }
+    }
+    private List&lt;String&gt; titles= Arrays.asList(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;);
+    private ArrayList&lt;Fragment&gt; list_fragment=new ArrayList&lt;&gt;();
+    private Fragment fragment1=new ContactsFragment();
+    private Fragment fragment2=new ContactsFragment();
+    private Fragment fragment3=new ContactsFragment();
+    private void initViewPager() {
+        list_fragment.add(fragment1);
+        list_fragment.add(fragment2);
+        list_fragment.add(fragment3);
+        mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+        mViewPager.setOffscreenPageLimit(1);
+mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mBottomNavigationBar.selectTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+//        slidingTabLayout.setViewPager(viewPager);
+    }
+    private void initButtonNavigationBar(){
+        mBottomNavigationBar
+                .addItem(new BottomNavigationItem(R.drawable.ic_profile_answer, &quot;会话&quot;))
+                .addItem(new BottomNavigationItem(R.drawable.ic_profile_article, &quot;通讯录&quot;))
+                .addItem(new BottomNavigationItem(R.drawable.ic_profile_column, &quot;设置&quot;))
+                .setActiveColor(R.color.colorAccent)
+                .setMode(BottomNavigationBar.MODE_FIXED)
+                .setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(int position) {
+                       mViewPager.setCurrentItem(position);
+                    }
+                    @Override
+                    public void onTabUnselected(int position) {
+                    }
+                    @Override
+                    public void onTabReselected(int position) {
+                    }
+                })
+                .initialise();
+    }
+</pre></div>
+
+
+<p>初始化    </p>
+<div class="codehilite"><pre>        initFrameLayout();
+        //initViewPager();
+        initButtonNavigationBar();
+</pre></div>
+
+
+<p>并且替换 list_fragment
+切换时        showFragment(position);</p>
+<h1>RecycleView</h1>
+<h2>MyRecyclerViewAdapter</h2>
+<div class="codehilite"><pre>import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+
+
+import com.example.administrator.ex.R;
+import com.example.administrator.ex.SqlLite.Song;
+
+import java.util.List;
+
+/**
+* Created by Administrator on 2016/8/26.
+*/
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter&lt;MyRecyclerViewHolder&gt;{
+    private List&lt;Song&gt; list;
+    private Activity activity;
+    public MyRecyclerViewAdapter(Activity activity, List&lt;Song&gt; list){
+        this.activity=activity;
+        this.list=list;
+    }
+    @Override
+    public MyRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new MyRecyclerViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_another2,parent,false),activity);
+    }
+
+    @Override
+    public void onBindViewHolder(MyRecyclerViewHolder holder, int position) {
+        holder.textView.setText(list.get(position).getName());
+        holder.textView2.setText(String.valueOf(list.get(position).getDuration()));
+//            ((TextView)holder.itemView.findViewById(R.id.textView_another2)).setText(list.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+}
+</pre></div>
+
+
+<h2>MyRecyclerViewHolder</h2>
+<div class="codehilite"><pre>import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
+
+import com.example.administrator.ex.R;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+* Created by Administrator on 2016/8/26.
+*/
+public class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
+    @Bind(R.id.textView)
+    TextView textView;
+    @Bind(R.id.textView2)
+    TextView textView2;
+    private Context activity;
+    public MyRecyclerViewHolder(View itemView, Context activity) {
+        super(itemView);
+        ButterKnife.bind(this,itemView);
+        this.activity=activity;
+    }
+}
+</pre></div>
+
+
+<h2>activity</h2>
+<div class="codehilite"><pre>            private List&lt;Song&gt; allSongs=new ArrayList&lt;&gt;();
+    private MyRecyclerViewAdapter adapter;
+    private void initRecycleView() {
+        adapter = new MyRecyclerViewAdapter(this, allSongs);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //自动滑动到最低,更新List时需要写一次
+        mRecyclerView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+        //mRecyclerView.smoothScrollToPosition(adapter.getItemCount());
+    }
+</pre></div>
+
+
+<p>recycleView加载时由于RecyclerView.Adapter会自动回收viewholder,所以存在BUG，导致viewholder复用,所以请每次的onBindViewHolder中viewholder要设置完整
+recycleView的adapter指定的list必须是同一个list,即地址一致,否则会造成数据不刷新,如果非要不同List,请new 一个adapter;</p>
+<h1>上下文菜单与选项菜单</h1>
+<div class="codehilite"><pre>    menu.xml:
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;item android:title=&quot;1&quot;/&gt;
+    &lt;item android:title=&quot;2&quot;/&gt;
+&lt;/menu&gt;
+</pre></div>
+
+
+<h2>选项菜单:</h2>
+<div class="codehilite"><pre>Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+</pre></div>
+
+
+<h2>上下文菜单:</h2>
+<div class="codehilite"><pre>//按下按钮后显示上下文菜单(未实现)
+Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.showContextMenu();
+                Toast.makeText(MainActivity.this, &quot;onClick&quot;, Toast.LENGTH_SHORT).show();
+            }
+        });
+</pre></div>
+
+
+<h1>网络通信</h1>
+<h2>鸿洋大神的okhttp封装</h2>
+<p>https://github.com/hongyangAndroid/okhttputils
+compile 'com.zhy:okhttputils:2.6.2'</p>
+<h3>get</h3>
+<div class="codehilite"><pre>private void get(){
+        OkHttpUtils
+                .get()
+                .url(&quot;http://apis.baidu.com/apistore/weatherservice/citylist&quot;)
+                .addHeader(&quot;apikey&quot;,&quot;592e46b62cfe201c68bf7d9f18db11ee&quot;)
+                .addParams(&quot;cityname&quot;, &quot;朝阳&quot;)
+                .build()
+                .execute(new StringCallback()
+                {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        System.out.println(&quot;response=&quot;+response+&quot;id=&quot;+id);
+                    }
+                });
+    }
+</pre></div>
+
+
+<p>//get请求中addParams是将参数放到URL Parameter Key;post请求是放到Body Parameter Key似乎不能放到URL中</p>
+<h3>post</h3>
+<div class="codehilite"><pre>private void post(){
+        OkHttpUtils
+                .post()
+                .url(&quot;http://121.40.184.143:99/cailei/getPlan_zong.php&quot;)
+                .addParams(&quot;account&quot;, &quot;1&quot;)
+                .build()
+                .execute(new StringCallback()
+                {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+                    @Override
+                    public void onResponse(String response, int id) {
+                        //response=[{&quot;name&quot;:&quot;英语四六级(推荐)&quot;,&quot;progress&quot;:&quot;1&quot;},{&quot;name&quot;:&quot;驾照&quot;,&quot;progress&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;普通话&quot;,&quot;progress&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;二级c语言&quot;,&quot;progress&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;三级数据库&quot;,&quot;progress&quot;:&quot;0&quot;}]
+                        List&lt;Plan_zong&gt; plan_zongs=new Gson().fromJson(response,new TypeToken&lt;List&lt;Plan_zong&gt;&gt;() {}.getType());
+                        Log.i(&quot;Plan_zongs=&quot;,&quot;--------------------Plan_zongs--------------------&quot;);
+                        for (Plan_zong plan_zong:plan_zongs){
+                            Log.i(&quot;Plan_zong.name=&quot;,plan_zong.getName());
+                            Log.i(&quot;Plan_zong.progress=&quot;,plan_zong.getProgress());
+                        }
+                        Log.i(&quot;Plan_zongs=&quot;,&quot;--------------------Plan_zongs--------------------&quot;);
+//                        System.out.println(&quot;response=&quot;+response+&quot;id=&quot;+id);
+                        Log.i(&quot;Gson&quot;,&quot;=&quot;+new Gson().toJson(plan_zongs));
+                    }
+                });
+    }
+</pre></div>
+
+
+<h3>post发送json</h3>
+<div class="codehilite"><pre>private void post_json(){
+        Plan_zong plan_zong=new Plan_zong();
+        plan_zong.setName(&quot;cai&quot;);
+        plan_zong.setProgress(&quot;1&quot;);
+        OkHttpUtils
+                .postString()
+                .url(&quot;http://121.40.184.143:99/cailei/login.php&quot;)
+                .content(new Gson().toJson(plan_zong))
+                .mediaType(MediaType.parse(&quot;application/json; charset=utf-8&quot;))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                    }
+                });
+    }
+</pre></div>
+
+
+<h3>post发送图片/文件+进度条</h3>
+<div class="codehilite"><pre> private void post_file(){
+        byte[] bitmap_bytes=BitmapUtil.bitmapToByte(BitmapFactory.decodeResource(getResources(),R.drawable.bt_search_branch));
+        File file= new File(Environment.getExternalStorageDirectory(),&quot;image.png&quot;);
+        try {
+            FileUtils.writeByteArrayToFile(file,bitmap_bytes);
+            String url=&quot;http://192.168.209.2/example/setImage.php&quot;;
+            OkHttpUtils
+                    .postFile()
+                    .url(url)
+                    .file(file)
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void inProgress(float progress, long total, int id) {
+                            super.inProgress(progress, total, id);
+                            Log.i(&quot;okhttp&quot;,&quot;progress=&quot;+progress);
+                        }
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.i(&quot;okhttp&quot;,&quot;response=&quot;+response);
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+</pre></div>
+
+
+<h3>下载文件</h3>
+<div class="codehilite"><pre>private void downloadFile(){
+        OkHttpUtils//
+                .get()//
+                .url(&quot;http://sw.bos.baidu.com/sw-search-sp/software/e6207d37846ba/QQ_8.7.19113.0_setup.exe&quot;)//下载页
+                .build()//
+                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), &quot;gson-2.2.1.jar&quot;)//下载文件路径,文件名
+                {
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
+                        super.inProgress(progress, total, id);
+                        Log.i(&quot;okhttp&quot;,&quot;progress=&quot;+progress);
+//                        mProgressBar.setProgress((int) (100 * progress));
+                    }
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e(&quot;okhttp&quot;, &quot;onError :&quot; + e.getMessage());
+                    }
+                    @Override
+                    public void onResponse(File response, int id) {
+                        Log.e(&quot;okhttp&quot;, &quot;onResponse :&quot; + Environment.getExternalStorageDirectory().getAbsolutePath());
+
+                    }
+                });
+    }
+</pre></div>
+
+
+<h2>Gson</h2>
+<p>http://www.jianshu.com/p/e740196225a4
+http://blog.csdn.net/axuanqq/article/details/51441590</p>
+<h3>Gson将json转类</h3>
+<div class="codehilite"><pre>//log={&quot;name&quot;:&quot;cai&quot;,&quot;progress&quot;:&quot;1&quot;}
+Plan_zong plan_zong2=new Gson().fromJson(log, Plan_zong.class);
+        Log.i(&quot;Gson&quot;,&quot;name=&quot;+plan_zong2.getName());
+        Log.i(&quot;Gson&quot;,&quot;progress=&quot;+plan_zong2.getProgress());
+</pre></div>
+
+
+<h3>Gson将类转为Json</h3>
+<div class="codehilite"><pre>Plan_zong plan_zong=new Plan_zong();
+        plan_zong.setName(&quot;cai&quot;);
+        plan_zong.setProgress(&quot;1&quot;);
+        String log=new Gson().toJson(plan_zong);
+        Log.i(&quot;Gson&quot;,log);
+</pre></div>
+
+
+<h3>Gson将JsonArray转为类的List</h3>
+<div class="codehilite"><pre>//response=[{&quot;name&quot;:&quot;英语四六级(推荐)&quot;,&quot;progress&quot;:&quot;1&quot;},{&quot;name&quot;:&quot;驾照&quot;,&quot;progress&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;普通话&quot;,&quot;progress&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;二级c语言&quot;,&quot;progress&quot;:&quot;0&quot;},{&quot;name&quot;:&quot;三级数据库&quot;,&quot;progress&quot;:&quot;0&quot;}]
+                        List&lt;Plan_zong&gt; plan_zongs=new Gson().fromJson(response,new TypeToken&lt;List&lt;Plan_zong&gt;&gt;() {}.getType());
+                        Log.i(&quot;Plan_zongs=&quot;,&quot;--------------------Plan_zongs--------------------&quot;);
+                        for (Plan_zong plan_zong:plan_zongs){
+                            Log.i(&quot;Plan_zong.name=&quot;,plan_zong.getName());
+                            Log.i(&quot;Plan_zong.progress=&quot;,plan_zong.getProgress());
+                        }
+                        Log.i(&quot;Plan_zongs=&quot;,&quot;--------------------Plan_zongs--------------------&quot;);
+</pre></div>
+
+
+<h3>Gson将List转JsonArray</h3>
+<div class="codehilite"><pre>new Gson().toJson(plan_zongs)
+</pre></div>
+
+
+<h3>Glide加载图片</h3>
+<div class="codehilite"><pre>Glide.with(activity).load(listImage.get(0)).placeholder(R.drawable.account_avatar).into(holder.imageView);
+</pre></div>
+
+
+<p>上面这种方式into里的imageView不能设置为固定大小，如果要用使用下面代码</p>
+<div class="codehilite"><pre>Glide.with(activity).load(listImage.get(0)).placeholder(R.drawable.account_avatar).into(
+                    new SimpleTarget&lt;GlideDrawable&gt;() {
+                        @Override
+                        public void onResourceReady(GlideDrawable resource, GlideAnimation&lt;? super GlideDrawable&gt; glideAnimation) {
+                            holder.imageView.setImageDrawable(resource);
+                        }
+            });
+</pre></div>
+
+
+<h1>数据存储与读取</h1>
+<h2>手机内部数据库(sqlite)</h2>
+<div class="codehilite"><pre>initSqlLite();
+        queryData_sqlite();
+        initView();
+private void initView() {
+        initRecycleView();
+        mButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addData_sqlite();
+            }
+        });
+        mButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteData_sqlite();
+            }
+        });
+        mButtonUpdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upData_sqlite();
+            }
+        });
+    }
+    private List&lt;Person&gt; allPersons = new ArrayList&lt;&gt;();
+    private List&lt;Song&gt; allSongs = new ArrayList&lt;&gt;();
+    private MyRecyclerViewAdapter adapter;
+
+    private void initRecycleView() {
+        adapter = new MyRecyclerViewAdapter(this, allPersons);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //自动滑动到最低,更新List时需要写一次
+        mRecyclerView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+        //mRecyclerView.smoothScrollToPosition(adapter.getItemCount());
+    }
+    private void initSqlLite() {
+        //打开或创建test.db数据库
+        SQLiteDatabase db = openOrCreateDatabase(&quot;test.db&quot;, Context.MODE_PRIVATE, null);
+        db.execSQL(&quot;DROP TABLE IF EXISTS person&quot;);
+        //创建person表
+        db.execSQL(&quot;CREATE TABLE person (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, age VARCHAR)&quot;);
+        //关闭当前数据库
+        allPersons.add(new Person());
+        db.close();
+    }
+    private void addData_sqlite() {
+        SQLiteDatabase db = openOrCreateDatabase(&quot;test.db&quot;, Context.MODE_PRIVATE, null);
+        Person person = new Person();
+        person.setName(&quot;蔡荣程&quot;);
+        person.setAge(&quot;22&quot;);
+        //ContentValues以键值对的形式存放数据
+        ContentValues cv = new ContentValues();
+        cv.put(&quot;name&quot;, person.getName());
+        cv.put(&quot;age&quot;, person.getAge());
+//        //插入ContentValues中的数据
+        db.insert(&quot;person&quot;, null, cv);
+        allPersons.add(person);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(this, &quot;添加最后一项成功&quot;, Toast.LENGTH_SHORT).show();
+        db.close();
+    }
+    private void deleteData_sqlite() {
+        SQLiteDatabase db = openOrCreateDatabase(&quot;test.db&quot;, Context.MODE_PRIVATE, null);
+        int id=adapter.getItemCount();
+        db.delete(&quot;person&quot;, &quot;id = ?&quot;, new String[]{String.valueOf(id)});
+        allPersons.remove(id-1);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(this, &quot;删除最后一项成功&quot;, Toast.LENGTH_SHORT).show();
+        db.close();
+    }
+    private void upData_sqlite() {
+        SQLiteDatabase db = openOrCreateDatabase(&quot;test.db&quot;, Context.MODE_PRIVATE, null);
+        ContentValues cv = new ContentValues();
+        Person person = new Person();
+        person.setName(&quot;蔡荣程&quot;);
+        person.setAge(&quot;0&quot;);
+        cv.put(&quot;name&quot;, person.getName());
+        cv.put(&quot;age&quot;, person.getAge());
+        db.update(&quot;person&quot;, cv, &quot;id = ?&quot;, new String[]{String.valueOf(adapter.getItemCount())});
+        allPersons.get(adapter.getItemCount()-1).setAge(&quot;0&quot;);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(this, &quot;修改最后一项成功&quot;, Toast.LENGTH_SHORT).show();
+        db.close();
+    }
+    private void queryData_sqlite() {
+        SQLiteDatabase db = openOrCreateDatabase(&quot;test.db&quot;, Context.MODE_PRIVATE, null);
+        //        Cursor c = db.rawQuery(&quot;SELECT * FROM person WHERE age &gt;= ?&quot;, new String[]{&quot;33&quot;});
+        Cursor c = db.rawQuery(&quot;SELECT * FROM person&quot;,null);
+        while (c.moveToNext()) {
+            Person person=new Person();
+            person.setName(c.getString(c.getColumnIndex(&quot;name&quot;)));
+            person.setAge(c.getString(c.getColumnIndex(&quot;age&quot;)));
+            allPersons.add(person);
+        }
+        c.close();
+        db.close();
+    }
+</pre></div>
+
+
+<h2>手机内部数据库(litepal)</h2>
+<p>compile 'org.litepal.android:core:1.4.0'
+首先在application中注册</p>
+<div class="codehilite"><pre>public class Application extends android.app.Application{
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        LitePal.initialize(this);
+    }
+}
+</pre></div>
+
+
+<div class="codehilite"><pre>&lt;application
+        android:name=&quot;.Application&quot;
+</pre></div>
+
+
+<p>assets内创建litepal.xml:</p>
+<div class="codehilite"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;litepal&gt;
+    &lt;list&gt;
+        &lt;mapping class=&quot;com.example.administrator.ex.SqlLite.Album&quot;&gt;&lt;/mapping&gt;
+        //对应类Song
+        &lt;mapping class=&quot;com.example.administrator.ex.SqlLite.Song&quot;&gt;&lt;/mapping&gt;
+    &lt;/list&gt;
+&lt;/litepal&gt;
+</pre></div>
+
+
+<p>创建类Song:</p>
+<div class="codehilite"><pre>import org.litepal.annotation.Column;
+import org.litepal.crud.DataSupport;
+
+/**
+* Created by Administrator on 2016/11/20 0020.
+*/
+
+public class Song extends DataSupport {
+    @Column(nullable = false)
+    private String name;
+
+    private int duration;
+
+    @Column(ignore = true)
+    private String uselessField;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public int getDuration() {
+        return duration;
+    }
+}
+</pre></div>
+
+
+<p>Activity使用:</p>
+<div class="codehilite"><pre>initData();
+        queryData();
+            private List&lt;Song&gt; allSongs=new ArrayList&lt;&gt;();
+private void initData() {
+        //根据litepal.xml初始数据库如果之前存在将优化性修改数据库
+        SQLiteDatabase db = LitePal.getDatabase();
+    }
+    private void addData() {
+        Song song1 = new Song();
+        song1.setName(&quot;song1&quot;);
+        song1.setDuration(320);
+        song1.save();
+        queryData();
+    }
+    private void deleteData() {
+//        DataSupport.delete(Song.class, id);
+//        DataSupport.deleteAll(Song.class, &quot;duration &gt; ?&quot;, &quot;350&quot;);
+        DataSupport.deleteAll(Song.class);
+        queryData();
+    }
+
+    private void upData() {
+        Album albumToUpdate = DataSupport.find(Album.class, 1);
+        albumToUpdate.setPrice(20.99f); // raise the price
+        albumToUpdate.save();
+    }
+    private void queryData() {
+        allSongs = DataSupport.findAll(Song.class);
+        List&lt;Song&gt; songs = DataSupport.where(&quot;name like ?&quot;, &quot;song%&quot;).order(&quot;duration&quot;).find(Song.class);
+        //不好用，请重写
+        if (adapter!=null){
+            adapter=null;
+            initRecycleView();
+        }
+    }
+</pre></div>
+
+
+<h2>androidStudio assets文件读取</h2>
+<div class="codehilite"><pre>public String ReadTxtFile(String strFilePath)
+    {
+        String path = strFilePath;
+        String content = &quot;&quot;; //文件内容字符串
+        //打开文件
+        File file = new File(path);
+        //如果path是传递过来的参数，可以做一个非目录的判断
+        if (file.isDirectory())
+        {
+            Log.d(&quot;TestFile&quot;, &quot;The File doesn&#39;t not exist.&quot;);
+        }
+        else
+        {
+            try {
+                InputStream instream = getResources().getAssets().open(&quot;a.json&quot;);
+//                InputStream instream = new FileInputStream(file);
+                if (instream != null)
+                {
+                    InputStreamReader inputreader = new InputStreamReader(instream);
+                    BufferedReader buffreader = new BufferedReader(inputreader);
+                    String line;
+                    //分行读取
+                    while (( line = buffreader.readLine()) != null) {
+                        content += line + &quot;\n&quot;;
+                    }
+                    instream.close();
+                }
+            }
+            catch (java.io.FileNotFoundException e)
+            {
+                Log.d(&quot;TestFile&quot;, &quot;The File doesn&#39;t not exist.&quot;);
+            }
+            catch (IOException e)
+            {
+                Log.d(&quot;TestFile&quot;, e.getMessage());
+            }
+        }
+        return content;
+    }
+原本是从指定路径读取文本，16.17改写为从assets读取指定a.json
+</pre></div>
+
+
+<h1>通用组件</h1>
+<h2>DrawerLayout</h2>
+<h3>DrawerLayout全部</h3>
+<div class="codehilite"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;android.support.v4.widget.DrawerLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:id=&quot;@+id/drawerLayout&quot;&gt;
+    &lt;android.support.design.widget.CoordinatorLayout
+        android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+    &lt;android.support.design.widget.AppBarLayout
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_width=&quot;match_parent&quot;&gt;
+        &lt;android.support.v7.widget.Toolbar
+            android:id=&quot;@+id/toolbar&quot;
+            android:layout_height=&quot;?attr/actionBarSize&quot;
+            android:layout_width=&quot;match_parent&quot;&gt;
+        &lt;/android.support.v7.widget.Toolbar&gt;
+    &lt;/android.support.design.widget.AppBarLayout&gt;
+        &lt;FrameLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:id=&quot;@+id/frameLayout&quot;
+        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;
+        &lt;/FrameLayout&gt;
+    &lt;/android.support.design.widget.CoordinatorLayout&gt;
+    &lt;android.support.design.widget.NavigationView
+        android:id=&quot;@+id/navigationView&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_gravity=&quot;start&quot;/&gt;
+&lt;/android.support.v4.widget.DrawerLayout&gt;
+</pre></div>
+
+
+<h3>DrawerLayout在下面</h3>
+<div class="codehilite"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;android.support.design.widget.CoordinatorLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot; android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+    &lt;android.support.v4.widget.DrawerLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:id=&quot;@+id/drawerLayout&quot;&gt;
+    &lt;android.support.design.widget.AppBarLayout
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_width=&quot;match_parent&quot;&gt;
+        &lt;android.support.v7.widget.Toolbar
+            android:id=&quot;@+id/toolbar&quot;
+            android:layout_height=&quot;?attr/actionBarSize&quot;
+            android:layout_width=&quot;match_parent&quot;&gt;
+        &lt;/android.support.v7.widget.Toolbar&gt;
+    &lt;/android.support.design.widget.AppBarLayout&gt;
+        &lt;FrameLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:id=&quot;@+id/frameLayout&quot;&gt;
+        &lt;/FrameLayout&gt;
+        &lt;android.support.design.widget.NavigationView
+            android:id=&quot;@+id/navigationView&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:layout_gravity=&quot;start&quot;/&gt;
+    &lt;/android.support.v4.widget.DrawerLayout&gt;
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</pre></div>
+
+
+<h2>CoordinatorLayout</h2>
+<div class="codehilite"><pre>&lt;android.support.design.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+              android:orientation=&quot;vertical&quot;
+              android:layout_width=&quot;match_parent&quot;
+              android:layout_height=&quot;match_parent&quot;&gt;
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</pre></div>
+
+
+<h2>自定义VIEW</h2>
+<div class="codehilite"><pre>    //这个是放在布局中要加的
+    public MyListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        //默认View是只支持EXACTLY(精确大小)或者match
+        setMeasuredDimension(measureWidth(widthMeasureSpec),measureWidth(heightMeasureSpec));
+    }
+    //可以长宽重构两次，现在只有一次
+    private int measureWidth(int widthMeasureSpec){
+        int measureMode=MeasureSpec.getMode(widthMeasureSpec);
+        int measureSize=MeasureSpec.getSize(widthMeasureSpec);
+        //精确
+        if (measureMode==MeasureSpec.EXACTLY)return measureSize;
+        //wrap_content 从300和容器大小选最小
+        else if (measureMode==MeasureSpec.AT_MOST)return Math.min(300,measureSize);
+        else return measureSize;
+    }
+</pre></div>
+
+
+<h1>SDK/API</h1>
+<h2>百度SDK</h2>
+<h2>#百度sdk初始化</h2>
+<p>androidStudio查看sha1
+<img alt="Alt text" src="https://github.com/cai1449074828/cai/blob/master/images/1480416850210.png">
+百度地图官网申请appkey
+<img alt="Alt text" src="https://github.com/cai1449074828/cai/blob/master/images/1480416877418.png">
+其中test2的appkey为我电脑的（每台电脑不同）
+下载SDK
+http://wiki.lbsyun.baidu.com/cms/androidsdk/all/v4.1.1/BaiduMap_AndroidSDK_v4.1.1_All.zip
+填写AppKey:</p>
+<div class="codehilite"><pre>&lt;application
+        android:name=&quot;.Application&quot;&gt;
+         &lt;meta-data
+            android:name=&quot;com.baidu.lbsapi.API_KEY&quot;
+            android:value=&quot;申请的AppKey&quot; /&gt;
+            &lt;/application&gt;
+</pre></div>
+
+
+<p>application:</p>
+<div class="codehilite"><pre>SDKInitializer.initialize(this);
+</pre></div>
+
+
+<p>gradle_app</p>
+<div class="codehilite"><pre>android {
+ sourceSets {
+        main {
+            jniLibs.srcDir &#39;libs&#39;
+        }
+    }
+}
+</pre></div>
+
+
+<p>权限</p>
+<div class="codehilite"><pre>uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot;/&gt;
+    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+    &lt;uses-permission android:name=&quot;com.android.launcher.permission.READ_SETTINGS&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.WAKE_LOCK&quot;/&gt;
+    &lt;uses-permission android:name=&quot;android.permission.CHANGE_WIFI_STATE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.GET_TASKS&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;
+    &lt;uses-permission android:name=&quot;android.permission.WRITE_SETTINGS&quot; /&gt;
+</pre></div>
+
+
+<h3>百度地图</h3>
+<p>layout:</p>
+<div class="codehilite"><pre>&lt;FrameLayout
+        android:id=&quot;@+id/map&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot; /&gt;
+</pre></div>
+
+
+<div class="codehilite"><pre>@SuppressWarnings(&quot;unused&quot;)
+    SupportMapFragment map;
+private void initMap() {
+        Intent intent = getIntent();
+        MapStatus.Builder builder = new MapStatus.Builder();
+        if (intent.hasExtra(&quot;x&quot;) &amp;&amp; intent.hasExtra(&quot;y&quot;)) {
+            // 当用intent参数时，设置中心点为指定点
+            Bundle b = intent.getExtras();
+            LatLng p = new LatLng(b.getDouble(&quot;y&quot;), b.getDouble(&quot;x&quot;));
+            builder.target(p);
+        }
+        builder.overlook(-20).zoom(15);
+        BaiduMapOptions bo = new BaiduMapOptions().mapStatus(builder.build())
+                .compassEnabled(false).zoomControlsEnabled(false);
+        map = SupportMapFragment.newInstance(bo);
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().add(R.id.map, map, &quot;map_fragment&quot;).commit();
+    }
+</pre></div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
