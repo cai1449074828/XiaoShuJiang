@@ -862,9 +862,7 @@ private void initMap() {
         manager.beginTransaction().add(R.id.map, map, "map_fragment").commit();
     }
 ```
-![enter description here][3]
 
 
   [1]: ./images/1480438135886.jpg "1480438135886.jpg"
   [2]: ./images/1480438065387.jpg "1480438065387.jpg"
-  [3]: ./images/1480437031301.jpg "1480437031301.jpg"
