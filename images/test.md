@@ -1,8 +1,6 @@
-[TOC]
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
+[TOC]
+
 #framelayout或viewPager+导航栏
 ##framelayout+导航栏
 ```
@@ -792,14 +790,9 @@ public String ReadTxtFile(String strFilePath)
 ```
 #SDK/API
 ##百度SDK
-## #百度sdk初始化
+###百度sdk初始化
 androidStudio查看sha1
-<<<<<<< HEAD
-![Alt text](https://github.com/cai1449074828/cai/blob/master/images/1480416850210.png)
-百度地图官网申请appkey
-=======
 ![](leanote://file/getImage?fileId=583d861bec73b62dd4000000)
->>>>>>> origin/master
 ![Alt text](https://github.com/cai1449074828/cai/blob/master/images/1480416877418.png)
 其中test2的appkey为我电脑的（每台电脑不同）
 下载SDK
@@ -867,4 +860,7 @@ private void initMap() {
         manager.beginTransaction().add(R.id.map, map, "map_fragment").commit();
     }
 ```
-![](leanote://file/getImage?fileId=583d7d3e4645330908000001)
+![enter description here][1]
+
+
+  [1]: ./images/1480437031301.jpg "1480437031301.jpg"
