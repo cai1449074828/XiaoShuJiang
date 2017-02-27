@@ -1,3 +1,4 @@
+# 常用
 gradle根目录
 ```
 allprojects {
@@ -10,7 +11,14 @@ allprojects {
 gradle app文件
 ```
     compile 'com.github.cai1449074828:myLibrary:2.2'
+	//动态权限
+	compile 'pub.devrel:easypermissions:0.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+	compile 'com.joy.rxbus:RxBus:1.0.0'
+	//↓dagger
+	compile 'com.google.dagger:dagger:2.8'
+  annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+  //↑dagger
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta2'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.3.0'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.6@aar'
