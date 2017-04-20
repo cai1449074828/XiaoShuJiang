@@ -1,0 +1,986 @@
+# ssh
+## Struts
+**Struts是基于MVC(model-view-control)设计模式的Web应用程序框架**
+### 配置
+#### 所需jar(以下所用2.3)
+**版本2.3(已放入javaee工程的zzzjar):**
+commons-fileupload
+commons-io
+commons-lang
+freemarker
+javassist
+ognl
+struts2-core
+xwork-core
+版本2.5:
+commons-fileupload-1.3.2
+commons-io-2.4
+commons-lang3-3.4
+freemarker-2.3.23
+javassist-3.20.0-GA
+log4j-api-2.7
+ognl-3.1.12
+struts2-core-2.5.10.1
+xmlpull-1.1.3.1
+#### struts.xml
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+   "http://struts.apache.org/dtds/struts-2.3.dtd"><!-- 2.3版本 -->
+   <!-- <include file="example.xml"/> -->
+   <struts>
+   <constant name="struts.action.extension" value="do,html,action"></constant>
+   <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<package name="default" namespace="/" extends="struts-default">
+		<!--<global-allowed-methods>regex:.*</global-allowed-methods> 2.5版本因为安全问题所加，否则无法动态调用2、3两种 -->
+		<default-action-ref name="index"></default-action-ref>
+		<action name="index">
+			<result>/index.jsp</result>
+		</action>
+		<action name="action_*_*" class="action.{1}Action" method="{2}"><!-- method="{1}"-->
+			<result name="success">/index.jsp</result>
+			<result name="add">/{2}.jsp</result>
+		</action>
+	</package>   
+  </struts>
+```
+#### web.xml
+```
+<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		<!-- 2.3版本:org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter -->
+		<!-- 2.5版本 org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter-->
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+```
+#### action.actionAction
+```
+package action;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class actionAction extends ActionSupport {
+	
+	public String add(){
+		System.out.println("执行Action add");
+		return "add";
+	}
+	@Override
+	public String execute() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("执行Action execute");
+		return SUCCESS;
+		//return super.execute();
+	}
+}
+
+```
+### Action接收参数
+#### 第一种
+```
+	public class LoginAction extends ActionSupport {
+	private String username;
+	public String login(){
+		System.out.println("用户名:"+username);
+		return "login";
+	}
+	//接收参数需要设置setUsername方法
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	@Override
+	public String execute() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("执行Action execute");
+		return SUCCESS;
+		//return super.execute();
+	}
+}
+```
+#### 第二种(多个model对象唯一属性,否则BUG)
+LoginAction:
+```
+public class LoginAction extends ActionSupport{
+	private User user;
+	public String login(){
+		System.out.println("用户名:"+user.getUsername());
+		System.out.println("密码:"+user.getPassword());
+		return "yse";
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@Override
+	public String execute() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("执行Action execute");
+		return SUCCESS;
+		//return super.execute();
+	}
+}
+```
+form:
+```
+<form action="/Practice/action_Login_login.action" method="post">
+<span>用户名:</span>
+<input name="user.username" type="text" value="请输入文字" placeholder="请输入文字"/><br/>
+<img src="images/密码.png" width="12px" height="12px"/>
+<span>密码:</span>
+<input name="user.password" type="password" placeholder="请输入密码"/><br/>
+<input type="submit" value="提交"/>
+<input type="submit" value="重置"/>
+</form>
+```
+form中有几个参数传递,User将会构造几次，以上代码User将构造两次，从而产生BUG，推测数据是栈获取，因此password会为空
+能否通过
+```
+if(this.user!==null){
+	if(user.getUsername!==null)this.user.serUsername(user.getUsername);
+}
+```
+解决BUG
+#### 第三种(一个model多个属性)
+```
+public class LoginAction extends ActionSupport implements ModelDriven<User>{
+	private User user= new User();
+	public String login(){
+		System.out.println("用户名:"+user.getUsername());
+		System.out.println("密码:"+user.getPassword());
+		return "yse";
+	}
+	public User getModel(){
+		return user;
+	}
+	@Override
+	public String execute() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("执行Action execute");
+		return SUCCESS;
+		//return super.execute();
+	}
+}
+```
+### input
+sturts.xml:
+```
+<result name="input">/login.jsp</result>
+```
+Action.java:
+```
+//需要重构validate
+@Override
+	public void validate() {
+		// TODO Auto-generated method stub
+		super.validate();
+		if(user.getUsername()==null||user.getUsername().equals("")){
+			System.out.println("用户名填写错误");
+			addFieldError("username","用户名填写错误");
+		}
+	}
+```
+jsp:
+```
+<%@ taglib prefix="s" uri="/struts-tags"%>
+```
+```
+<input name="user.username" type="text" value="请输入文字" placeholder="请输入文字"/>
+	<s:fielderror>
+		<s:param>username</s:param>
+	</s:fielderror>
+<br/>
+```
+还有当数据传输错误，如数据类型不一致时,如user有int的age属性，from传递string,将action直接返回"input"
+### result
+#### param
+```
+<result name="success"><param name="location">${#request.path}.jsp</param></result>
+<result name="success1"><param name="location">${#session.path}.jsp</param></result>
+```
+```
+private HttpServletRequest request;
+	public LoginAction() {
+		// TODO Auto-generated constructor stub
+		request = ServletActionContext.getRequest();//同理可getResponse,getServletContext
+		request.setAttribute("path","index");
+	}
+```
+#### type
+通常有
+dispatcher,redirect
+默认为dispatcher，重定向redirect会丢失请求参数
+## hibernate
+### 初始配置@Entity
+hibernate.cfg.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/test</property><!-- ?useUnicode=true&amp;characterEncoding=UTF-8 -->
+		<property name="connection.username">root</property>
+		<property name="connection.password"></property> 
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.CharSet">utf-8</property>
+        <property name="hibernate.connection.characterEncoding">utf-8</property>
+        <property name="hibernate.connection.useUnicode">true</property>
+        
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<property name="hbm2ddl.auto">update</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<!-- 映射文件 
+		<mapping resource="com/amigo/pojo/User.hbm.xml" />
+		-->
+		<mapping class="bean.Student"/>
+		<mapping class="bean.StudentPoint"/>
+		<mapping class="bean.ShangPin_dingDan"/>
+		<mapping class="bean.Teacher"/>
+	</session-factory>
+</hibernate-configuration>
+
+```
+Student.java
+```
+import javax.persistence.Entity;//jpa注解
+import javax.persistence.Id;
+//@Entity(name="t_student")//指定表名
+@Entity
+public class Student{
+	private int id;
+	public void setId(int id) {
+		this.id = id;
+	}
+	@Id
+	public int getId() {
+		return id;
+	}
+}
+```
+exoprtDB()
+```
+	private Configuration configuration;
+	private SessionFactory sessionFactory;
+	private ServiceRegistry serviceRegistry;
+	private void initHibernate(){
+		initHibernate_2();
+	}
+	//更低版本
+	private void initHibernate_1() {
+//		Configuration configuration = new Configuration().configure();  
+//		SessionFactory sessionFactory = configuration.buildSessionFactory(); 
+	}
+	//4.3以下
+	private void initHibernate_2() {
+		configuration = new Configuration().configure(); 
+		serviceRegistry=new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry(); 
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	}
+	//4.3
+	private void initHibernate_3() {
+		configuration = new Configuration().configure();  		
+//        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());  
+//        StandardServiceRegistryImpl serviceRegistry = (StandardServiceRegistryImpl) builder.build();  
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry); 
+	}
+	@Test
+    public void exoprtDB() {  
+        //默认读取hibernate.cfg.xml文件   
+		
+		initHibernate();
+        SchemaExport export = new SchemaExport(configuration);  
+        export.create(true, true);
+    }
+```
+### 基础@
+#### @Table
+通过@Table实现跨数据库
+name:表名
+schema:数据库名
+```
+@Table(name="student_info",schema="test")//mysql不支持catalog
+```
+#### @Id
+可以指定多个主键，如果指定String类型主键时，在mysql低版本可能错误需要@Column(length=8)指定长度
+```
+	//implements Serializable//多个主键需要实现,但一张表应该只能有一个主键
+	@Id
+	private int sid;
+	@Id
+	private int id;
+	@Id
+	private String name;
+	private int age;
+	private Address address;
+```
+#### @GeneratedValue
+只能有一个@Id否则无效,因为一张表只能有一个主键
+```
+	@Id
+	@GeneratedValue//默认strategy=GenerationType.AUTO自动增长等同于GenerationType.IDENTITY
+	//@GeneratedValue(generator="id")
+	//@GenericGenerator(name="id",strategy="identity ")//等同以上
+	private int sid;
+	private int id;
+	private String name;
+	private int age;
+	private Address address;
+```
+#### @EmbeddedId(主键)
+```
+	@EmbeddedId
+	private StudentPk studentPk;
+```
+StudentPk.java
+```
+public class StudentPk implements Serializable{
+	@GeneratedValue
+	private int id;
+	private int sid;
+}
+```
+#### @Transient(隐私)
+```
+	@Transient//数据库中将不会存在
+	private Address address;
+```
+### 外键
+#### @OneToOne(单向&&双向)
+```
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="pid",unique=true)
+	private StudentPoint studentPoint;
+```
+StudentPoint.java
+```
+@Entity
+@Table(name="student_point",schema="test")
+public class StudentPoint{
+	@Id
+	@GeneratedValue
+	private int pid;
+	@OneToOne(mappedBy="studentPoint")//被studentPoint映射，在Student中维护
+	private Student student;
+}
+```
+#### @ManyToOne(自身积极)
+一个学生购买多个订单
+name:生成表的列
+referencedColumnName:依赖列(应具有唯一性，也符合逻辑)
+下面依赖于学生的id即学号。如果依赖列不具有唯一性(如依赖年龄)，数据库可以创建，但写数据时，依赖列不能重复，也就是age不能重复，不符合逻辑
+商品订单:
+```
+@Entity
+public class ShangPin_dingDan {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	private int erweima;
+	private String isArrive;
+	@ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="id",referencedColumnName="id")
+	private Student student;
+	}
+```
+数据提交
+```
+		Student student=new Student("1", 1,new StudentPoint(90, 90, 89), new Address("1","1"));
+		ShangPin_dingDan shangpin=new ShangPin_dingDan();
+		shangpin.setStudent(student);
+		session.save(student);
+		session.save(shangpin);
+```
+#### @OneToMany(自身懒散)(与@ManyToOne一起双向外键)
+学生:
+```
+	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY)
+	@JoinColumn(name="pid")
+	private Set<ShangPin_dingDan> sets;
+```
+@JoinColumn(name="pid")//依赖自身列pid应具有唯一性
+提交数据:
+```
+	Student student=new Student("1", 1,new StudentPoint(90, 90, 89), new Address("1","1"));
+	ShangPin_dingDan shangpin=new ShangPin_dingDan();
+	Set<ShangPin_dingDan> sets=new HashSet<>();
+	sets.add(shangpin);
+	student.setSets(sets);
+	session.save(student);
+	session.save(shangpin);
+```
+如果@OneToMany与@ManyToOne一起用会生成双向外键，提交数据方式两种都可以
+#### @ManyToMany
+##### 单项键
+学生与老师
+学生:
+```
+@Entity
+@Table(name="student_info",schema="test")//mysql5.7下不支持catalog
+public class Student implements Serializable{
+	@Id
+	@GeneratedValue
+	private int id;
+	@ManyToMany
+	@JoinTable(name="teachers_students",joinColumns={@JoinColumn(name="id")},inverseJoinColumns={@JoinColumn(name="tid")})
+	private Set<Teacher> sets_teacher;
+	public Set<Teacher> getSets_teacher() {
+		return sets_teacher;
+	}
+	public void setSets_teacher(Set<Teacher> sets_teacher) {
+		this.sets_teacher = sets_teacher;
+	}
+}
+```
+老师:
+```
+@Entity
+public class Teacher {
+	@Id
+	@GeneratedValue
+	private int tid;
+	private String name;
+	public Teacher(String name) {
+		this.name = name;
+	}
+}
+```
+提交数据:
+```
+	Student student=new Student("1", 1,new StudentPoint(90, 90, 89), new Address("1","1"));
+	Teacher teacher=new Teacher("老师");
+	Set<Teacher> sets_teacher=new HashSet<>();
+	sets_teacher.add(teacher);
+	student.setSets_teacher(sets_teacher);
+	session.save(student);
+	session.save(teacher);
+```
+##### 双项键
+学生与老师
+因为学生拥有以下方法，所以主控端在学生
+```
+	public Set<Teacher> getSets_teacher() {
+		return sets_teacher;
+	}
+	public void setSets_teacher(Set<Teacher> sets_teacher) {
+		this.sets_teacher = sets_teacher;
+	}
+```
+只需在老师上加	
+```
+	@ManyToMany(mappedBy="sets_teacher")
+	private Set<Student> sets_student;
+```
+```
+@Entity
+public class Teacher {
+	@Id
+	@GeneratedValue
+	private int tid;
+	private String name;
+	@ManyToMany(mappedBy="sets_teacher")
+	private Set<Student> sets_student;
+	public Teacher(String name) {
+		this.name = name;
+	}
+	public int getTid() {
+		return tid;
+	}
+	public void setTid(int tid) {
+		this.tid = tid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+```
+## spring
+### spring实现基础的参数注入
+#### applicationContext.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+	<!-- scope:singleton默认，单例的，支持destroy-method="destroy"。prototype，多例 ,但不支持destroy-method="destroy"-->
+	<bean id="helloWorld" class="spring.HelloWorld" scope="prototype" init-method="init" destroy-method="destroy">
+		<!-- 必须设置get/set方法 -->
+		<property name="name" value="世界" />
+	</bean>
+	<!-- 必须设置含参构造方法 -->
+	<bean id="car" class="spring.Car">
+		<constructor-arg value="奔驰"></constructor-arg>
+		<constructor-arg value="1000000" type="int"></constructor-arg>
+	</bean>
+	<bean id="car2" class="spring.Car">
+		<constructor-arg type="String"><value><![CDATA[<大众>]]></value></constructor-arg>
+		<constructor-arg value="56.8" type="double"></constructor-arg>
+	</bean>
+	<!-- 外部注入 -->
+	<bean id="car3" class="spring.Car">
+		<constructor-arg type="String"><value><![CDATA[<大众>]]></value></constructor-arg>
+		<constructor-arg value="1000000" type="int"></constructor-arg>
+		<constructor-arg value="56.8" type="double"></constructor-arg>
+		<constructor-arg ref="helloWorld"></constructor-arg>
+	</bean>
+	<!-- 内部注入 -->
+	<bean id="car4" class="spring.Car">
+		<constructor-arg type="String"><value>世界</value></constructor-arg>
+		<constructor-arg value="1000000" type="int"></constructor-arg>
+		<constructor-arg value="56.8" type="double"></constructor-arg>
+		<!-- 不能被引用 -->
+		<!-- 
+			<constructor-arg>
+				<null/>
+			</constructor-arg>
+		 -->
+		 <!-- 赋值null -->
+		 <constructor-arg>
+			<bean class="spring.HelloWorld">
+				<property name="name" value="世界" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="car5" class="spring.Car">
+		<constructor-arg type="String"><value>世界</value></constructor-arg>
+		<constructor-arg value="1000000" type="int"></constructor-arg>
+		<constructor-arg value="56.8" type="double"></constructor-arg>
+		<constructor-arg ref="helloWorld"></constructor-arg>
+		<!-- 必须设置get/setHelloWorld方法 -->
+		<property name="helloWorld.name" value="天空"></property>
+		<property name="name" value="天空"></property>
+	</bean>
+	<!-- 集合的构造 -->
+	<bean id="list_cars" class="spring.ListCar">
+		<constructor-arg ref="list">
+		<!-- 
+			<list>
+				<ref bean="car"/>
+				<ref bean="car2"/>
+				<ref bean="car3"/>
+			</list>
+		 -->
+		</constructor-arg>
+		<constructor-arg>
+			<map>
+				<entry key="car4" value-ref="car4"/>
+				<entry key="car5" value-ref="car5"/>
+			</map>
+		</constructor-arg>
+	</bean>
+	<util:list id="list">
+		<ref bean="car"/>
+		<ref bean="car2"/>
+		<ref bean="car3"/>
+	</util:list>
+	<!-- 导入db配置文件 -->
+	<context:property-placeholder location="db.properties"/>
+	<bean id="dataSource" class="spring.DataSource">
+		<property name="properties">
+			<props>
+				<prop key="user">${user}</prop>
+				<prop key="password">${password}</prop>
+				<prop key="jdbcUrl">${jdbcUrl}</prop>
+				<prop key="driverClass">${driverClass}</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 需要无参构造方法 -->
+	<bean id="car6" class="spring.Car" p:name="世界" p:price="100000000" p:speed="809999" p:helloWorld-ref="helloWorld" ></bean>
+	<!-- 自动装配 --><!-- autowire="byType"的话，IOC容器仅能有一个对象，即HelloWorld仅能一个 -->
+	<bean id="car7" class="spring.Car" p:name="世界" p:price="100000000" p:speed="809999" autowire="byName" ></bean>
+	<!-- 抽象bean无需指定类 -->
+	<bean id="car_abstract" abstract="true" p:name="白云" p:speed="10" p:price="2000" p:helloWorld-ref="helloWorld"></bean>
+	<!-- 不会继承自动装配 -->
+	<bean id="car8" class="spring.Car" parent="car_abstract"></bean>
+	<!-- SPEL 引用Math的静态属性，其他bean属性,或运算符-->
+	<bean id="car9" class="spring.Car" p:name="#{'蓝天'}" p:speed="#{T(Math).PI*3}" p:price="#{car8.price>3000?car8.price:3000}" p:helloWorld-ref="helloWorld" ></bean>
+</beans>
+```
+#### Car.java
+```
+public class Car {
+	private String name;
+	private int price;
+	private double speed;
+	private HelloWorld helloWorld;
+	public Car() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Car(String name,int price) {
+		this.name = name;
+		this.price = price;
+	}
+	public Car(String name,double speed) {
+		this.name = name;
+		this.speed = speed;
+	}
+	public Car(String name,int price,double speed,HelloWorld helloWorld) {
+		this.name = name;
+		this.price = price;
+		this.speed = speed;
+		this.helloWorld=helloWorld;
+	}
+	public void show() {
+		System.out.println("名称:"+name);
+		System.out.println("价格:"+price);
+		System.out.println("速度:"+speed);
+		if (helloWorld!=null)helloWorld.hello();
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public double getSpeed() {
+		return speed;
+	}
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+	public HelloWorld getHelloWorld() {
+		return helloWorld;
+	}
+	public void setHelloWorld(HelloWorld helloWorld) {
+		this.helloWorld = helloWorld;
+	}
+	
+}
+```
+#### DataSource.java
+```
+import java.util.Properties;
+
+public class DataSource {
+	private Properties properties;
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+
+	public void show() {
+		System.out.println(properties);
+		
+	}
+	
+}
+```
+#### HelloWorld.java(bean生命周期)
+也可以用InitializingBean,DisposableBean接口实现bean的初始化和销毁，这样无需在applicationContext.xml里配置init和destroy
+```
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+
+public class HelloWorld implements BeanPostProcessor{
+	private String name;
+	public HelloWorld() {
+		super();
+		System.out.println("HelloWorld初始化");
+	}
+	public String getName() {
+		System.out.println("HelloWorldgetName");
+		return name;
+	}
+	public void setName(String name) {
+		System.out.println("HelloWorldsetName");
+		this.name = name;
+	}
+	public void hello(){
+		System.out.println("你好,"+name);
+	}
+	public void init(){
+		System.out.println(name+"初始化完毕");
+	}
+	public void destroy(){
+		System.out.println(name+"毁灭");
+	}
+	@Override
+	public Object postProcessAfterInitialization(Object arg0, String arg1) throws BeansException {
+		System.out.println("postProcessAfterInitialization"+arg0+arg1);
+		return arg0;
+	}
+	@Override
+	public Object postProcessBeforeInitialization(Object arg0, String arg1) throws BeansException {
+		System.out.println("postProcessBeforeInitialization"+arg0+arg1);
+		return arg0;
+	}
+}
+
+```
+#### ListCar.java
+```
+import java.util.List;
+import java.util.Map;
+
+public class ListCar {
+	private List<Car> list_car;
+	private Map<String,Car> map_car;
+	public ListCar(List<Car> list_car,Map<String,Car> map_car) {
+		super();
+		this.list_car = list_car;
+		this.map_car = map_car;
+	}
+	public List<Car> getList_car() {
+		return list_car;
+	}
+
+	public void setList_car(List<Car> list_car) {
+		this.list_car = list_car;
+	}
+	public void show(){
+		System.out.println("-----------list_car展示开始-----------");
+		for(Car car:list_car){
+			car.show();
+		}
+		System.out.println("-----------list_car展示结束-----------");
+		System.out.println("-----------map_car展示开始-----------");
+		map_car.get("car4").show();
+		map_car.get("car5").show();
+		System.out.println("-----------map_car展示结束-----------");
+	}
+}
+```
+#### SpringMain
+```
+@Test
+	public void main(){
+		ClassPathXmlApplicationContext classPathXmlApplicationContext=new ClassPathXmlApplicationContext("applicationContext.xml");
+		HelloWorld helloWorld = (HelloWorld) classPathXmlApplicationContext.getBean("helloWorld");
+		HelloWorld helloWorld2 = (HelloWorld) classPathXmlApplicationContext.getBean(HelloWorld.class);
+		HelloWorld helloWorld3 = new HelloWorld();
+		System.out.println(helloWorld.toString());
+		System.out.println(helloWorld2.toString());
+		System.out.println(helloWorld3.toString());
+		helloWorld.hello();
+		helloWorld2.hello();
+		Car car=(Car) classPathXmlApplicationContext.getBean("car");
+		car.show();
+		Car car2=(Car) classPathXmlApplicationContext.getBean("car2");
+		car2.show();
+		Car car3=(Car) classPathXmlApplicationContext.getBean("car3");
+		car3.show();
+		Car car4=(Car) classPathXmlApplicationContext.getBean("car4");
+		car4.show();
+		Car car5=(Car) classPathXmlApplicationContext.getBean("car5");
+		car5.show();
+		ListCar list_cars=(ListCar) classPathXmlApplicationContext.getBean("list_cars");
+		list_cars.show();
+		DataSource dataSource=(DataSource) classPathXmlApplicationContext.getBean("dataSource");
+		dataSource.show();
+		Car car6=(Car) classPathXmlApplicationContext.getBean("car6");
+		car6.show();
+		Car car7=(Car) classPathXmlApplicationContext.getBean("car7");
+		car7.show();
+		Car car8=(Car) classPathXmlApplicationContext.getBean("car8");
+		car8.show();
+		Car car9=(Car) classPathXmlApplicationContext.getBean("car9");
+		car9.show();
+		classPathXmlApplicationContext.close();
+	}
+```
+### springAware
+#### ApplicationContextAware接口
+实现ApplicationContextAware接口接口后，
+```
+ClassPathXmlApplicationContext classPathXmlApplicationContext=new ClassPathXmlApplicationContext("applicationContext.xml");
+```
+上面代码执行时，会执行ApplicationContextAware接口提供的setApplicationContext方法。**要注意的是，moocApplicationContext这个bean必须是单例的。**
+```
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+
+public class MoocApplicationContext implements BeanNameAware,ApplicationContextAware  {
+	private String beanName;
+	//实现BeanNameAware接口自动获取beanName
+	@Override
+	public void setBeanName(String beanName) {
+		this.beanName = beanName;
+		System.out.println("BeanName : " + beanName);
+	}
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext)
+			throws BeansException {
+		System.out.println("MoocApplicationContext : " + applicationContext.getBean("moocApplicationContext").hashCode());
+		System.out.println("MoocApplicationContext : " + applicationContext.getBean(this.beanName).hashCode());
+	}
+}
+```
+```
+<bean id="moocApplicationContext" class="spring.MoocApplicationContext" ></bean>
+	<bean id="moocBeanName" class="spring.MoocBeanName" ></bean>
+```
+#### autowire
+##### 基础
+**装载类:**
+applicationContext.xml:
+```
+<beans
+	default-autowire="constructor">
+</beans
+```
+构造方法传参:
+```
+	private AutoWiringDAO autoWiringDAO;
+	public AutoWiringService(AutoWiringDAO autoWiringDAO) {
+		this.autoWiringDAO = autoWiringDAO;
+	}
+```
+**装载资源文件:**
+实现ApplicationContextAware方法后获取applicationContext,applicationContext.getResource("classpath:config.xml");
+实现资源文件加载
+```
+	implements ApplicationContextAware
+	private ApplicationContext applicationContext;
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		// TODO Auto-generated method stub
+		this.applicationContext=applicationContext;
+	}
+	void getResource() throws IOException{
+		Resource resource1 = applicationContext.getResource("classpath:config.xml");
+		//Resource resource2 = applicationContext.getResource("file://E:\\programme\\code\\javaEE\\Practice\\resource\\config.xml");
+		//Resource resource3 = applicationContext.getResource("url:https://www.baidu.com/index.html");
+		System.out.println("resource1.getFilename():"+resource1.getFilename());
+		System.out.println("resource1.contentLength():"+resource1.contentLength());
+	}
+```
+##### @Component/@Autowired类注入(自动装配list,maps)maps的列出
+@Service/@Repository均可用 @Component
+@Service表示逻辑上的服务
+@Repository表示逻辑上的内部注入类，不是Bean
+当自动装配集合时，会寻找属于BeanInterface的Bean，装入集合，用@Order指定次序
+maps的列出:
+```
+for (Map.Entry<String, BeanInterface> entry : map.entrySet()) {
+				System.out.println(entry.getKey() + "      " + entry.getValue().getClass().getName());
+			}
+```
+
+```
+@Component//@Service
+public class BeanInvoker {
+	@Autowired
+	//	@Resource
+	//	@Inject//使用@Name指定名称与@Autowired中的@Qualifier一样
+	@Qualifier("beanImplTwo")//指定名称
+	private BeanInterface beanInterface;
+	@Autowired
+	private List<BeanInterface> list;
+	@Autowired
+	private Map<String, BeanInterface> map;
+}
+```
+```
+@Order(2)//集合中的次序
+@Component//或@Repository
+public class BeanImplOne implements BeanInterface {
+
+}
+```
+##### @Configuration用类实现spring配置文件，且从其他配置文件注入属性
+Config.java
+```
+@Configuration
+@ImportResource("classpath:config.xml")
+public class Config {
+	@Value("${jdbcUrl}")
+	private String jdbcUrl;
+	
+	@Value("${user}")
+	private String user;
+	
+	@Value("${password}")
+	private String password;
+	
+	@Value("${driverClass}")
+	private String driverClass;
+
+	@Autowired
+	private Store<String> s1;
+	
+	@Autowired
+	private Store<Integer> s2;
+	
+	@Bean(name = "stringStoreTest",initMethod="init", destroyMethod="destroy")
+	@Scope(value=BeanDefinition.SCOPE_SINGLETON, proxyMode = ScopedProxyMode.TARGET_CLASS)//这种代理不能用多例
+	public StringStore getStringStore2() {
+		System.out.println("s1.getClass().getName()："+s1.getClass().getName());
+		System.out.println("s1.hashCode()："+s1.hashCode());
+		System.out.println("s2.getClass().getName()："+s2.getClass().getName());
+		return new StringStore(user);
+	}
+	
+	@Bean
+	public Store<String> getStringStore() {
+		return new StringStore(user);
+	}
+	@Bean
+	public Store<Integer> getIntergerStore() {
+		return new IntegerStore();
+	}
+}
+```
+StringStore.java
+```
+public class StringStore implements Store<String> {
+	
+	private String username;
+	public StringStore(String username) {
+		// TODO Auto-generated constructor stub
+		this.username=username;
+	}
+	//@PostConstruct
+	public void init() {
+		System.out.println("This is init.");
+	}
+	//@PreDestroy
+	public void destroy() {
+		System.out.println("This is destroy.");
+	}
+	
+	public void showConfit(){
+		System.out.println("username:"+username);
+	}
+}
+```
+@test
+```
+		StringStore stringStore=(StringStore) classPathXmlApplicationContext.getBean("stringStore");
+		stringStore.showConfit();
+		System.out.println(stringStore.hashCode());
+		stringStore.destroy();
+		
+		StringStore stringStore2=(StringStore) classPathXmlApplicationContext.getBean("stringStore");
+		stringStore2.showConfit();
+		System.out.println(stringStore2.hashCode());
+		stringStore2.destroy();
+```

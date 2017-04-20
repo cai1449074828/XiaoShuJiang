@@ -1,0 +1,11 @@
+timeout=3
+
+　　default 0
+
+　　title CDlinux
+
+　　find --set-root /CDlinux/bzImage
+
+　　kernel /CDlinux/bzImage CDL_DEV=LABEL=CDlinux CDL_LANG=zh_CN.UTF-8
+
+　　initrd /CDlinux/initrd
